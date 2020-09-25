@@ -1,6 +1,7 @@
 import os
 import sys
 from time import sleep
+from playsound import playsound
 
 
 def clear():
@@ -16,3 +17,7 @@ def typewriter(text, speed):
         sleep(speed)
         sys.stdout.write(char)
         sys.stdout.flush()
+
+
+def typewriter_sound():
+    playsound("typewriter.wav")

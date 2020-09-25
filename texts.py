@@ -1,6 +1,7 @@
 import engine
 import sys
 from time import sleep
+from multiprocessing import Process
 from colorama import Fore, Back, Style
 
 
@@ -12,7 +13,16 @@ def intro():
 
 def story_telling():
     story = open("story.txt", "r", encoding="utf8")
-    story_color = Fore.YELLOW + story.read()+ "\n" + Style.RESET_ALL
+    story_color = Fore.YELLOW + story.read()+ "\n\n" + Style.RESET_ALL
     story.close()
+    
+    writing = Process(target=engine.typewriter, args=(story_color, 0.001))
+    sound = Process(target=engine.typewriter_sound)
+    
+    writing.start()
+    sound.start()
+    writing.join()
+    sound.join()
 
-    engine.typewriter(story_color, 0.05)
+    input(Fore.RED + "Press ENTER key to continue..." + Style.RESET_ALL)
+    engine.clear()
